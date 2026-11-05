@@ -1,181 +1,195 @@
-# মিলনমেলা (Milonmela) — মাদরাসা প্রাক্তন ছাত্র পুনর্মিলনী ২০২৭
+# Milonmela (মিলনমেলা) — Event & Alumni Reunion Management Platform
 
-> **চুপাইর জামিউল উলুম আলিম মাদরাসা**-এর ৫০ বছর পূর্তি ও সুবর্ণজয়ন্তী প্রাক্তন ছাত্র পুনর্মিলনী ২০২৭-এর জন্য নির্মিত সম্পূর্ণ স্বয়ংক্রিয় ওয়েব প্ল্যাটফর্ম।
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.5-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3.0-blue?style=flat-square&logo=react)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-Proprietary-amber?style=flat-square)](#license)
 
-🌐 **লাইভ ওয়েবসাইট:** [https://chupairmadrasah.vercel.app](https://chupairmadrasah.vercel.app)  
-📦 **গিটহাব রিপোজিটরি:** [https://github.com/oliullah05/milonmela](https://github.com/oliullah05/milonmela)
+> A production-grade, full-stack alumni reunion and event management system built for the 50-year Golden Jubilee of **Chupair Jamiul Ulum Alim Madrasah**. Engineered to handle high-traffic online registrations, manual mobile payment verification, server-rendered Bengali PDF registration slips, and real-time on-site attendance check-ins.
 
----
-
-## সূচিপত্র (Table of Contents)
-
-1. [প্রজেক্ট ওভারভিউ (Project Overview)](#প্রজেক্ট-ওভারভিউ-project-overview)
-2. [সিস্টেমের প্রধান রুটসমূহ (Routes)](#সিস্টেমের-প্রধান-রুটসমূহ-routes)
-3. [ব্যবহারকারী নির্দেশিকা (User Workflow — How to Proceed)](#ব্যবহারকারী-নির্দেশিকা-user-workflow--how-to-proceed)
-   - [ক. শিক্ষার্থী ও আবেদনকারীদের জন্য (For Alumni / Applicants)](#ক-শিক্ষার্থী-ও-আবেদনকারীদের-জন্য-for-alumni--applicants)
-   - [খ. অ্যাডমিন ও আয়োজকদের জন্য (For Administrators)](#খ-অ্যাডমিন-ও-আয়োজকদের-জন্য-for-administrators)
-4. [কারিগরি বৈশিষ্ট্য (Technical Architecture & Features)](#কারিগরি-বৈশিষ্ট্য-technical-architecture--features)
-5. [এনভায়রনমেন্ট ভেরিয়েবল (Environment Variables)](#এনভায়রনমেন্ট-ভেরিয়েবল-environment-variables)
-6. [লোকাল সেটআপ ও ডিপ্লয়মেন্ট (Local Setup & Deployment)](#লোকাল-সেটআপ-ও-ডিপ্লয়মেন্ট-local-setup--deployment)
-7. [ডাটাবেজ স্কিমা ও সিকিউরিটি (Database & Security)](#ডাটাবেজ-স্কিমা-ও-সিকিউরিটি-database--security)
+🌐 **Live Website:** [https://chupairmadrasah.vercel.app](https://chupairmadrasah.vercel.app)  
+📦 **GitHub Repository:** [https://github.com/oliullah05/milonmela](https://github.com/oliullah05/milonmela)
 
 ---
 
-## প্রজেক্ট ওভারভিউ (Project Overview)
+## Executive Summary
 
-**মিলনমেলা** একটি Bengali-first, সম্পূর্ণ রেসপনসিভ Next.js (App Router) ফুলস্ট্যাক অ্যাপ্লিকেশন। এটি পুনর্মিলনী অনুষ্ঠানের রেজিস্ট্রেশন, ফি ট্র্যাকিং, ম্যানুয়াল TrxID ভেরিফিকেশন, ডিজিটাল কিউআর স্লিপ (PDF) জেনারেশন, এবং ইভেন্টের দিনের লাইভ উপস্থিতি (Check-in/Attendance) ব্যবস্থাপনার জন্য একক প্ল্যাটফর্ম হিসেবে কাজ করে।
+Managing large-scale alumni reunions in Bangladesh presents distinct logistical hurdles: handling manual mobile payments (Nagad/Rocket), ensuring secure TrxID verification without false claims, supporting complex Bengali typography across diverse mobile devices, and executing swift gate check-ins on event day.
 
-### প্রধান প্রযুক্তি সমূহ:
-- **ফ্রেমওয়ার্ক:** Next.js 16 (App Router, Turbopack)
-- **লাইব্রেরি:** React 19
-- **ডাটাবেজ:** MongoDB (Mongoose 9 ODM)
-- **মিডিয়া ও ছবি স্টোরেজ:** Cloudinary API + Sharp
-- **পিডিএফ ও কিউআর:** React-PDF, QRCode, Noto Sans Bengali Font
-- **অথেনটিকেশন:** JWT (HttpOnly, SameSite Strict Cookies) + Bcrypt
-- **ডিজাইন:** কাস্টম মডার্ন সিএসএস, মোবাইল-ফার্স্ট রেসপনসিভ লেআউট
+**Milonmela** solves these challenges through an end-to-end platform featuring:
+- **Participant Portal:** Frictionless mobile-first registration, automated photo compression, permanent status links, and verifiable PDF slip generation.
+- **Organizer Administration:** Real-time analytics of confirmed funds, atomic payment auditing, single-click gate check-in via search or device camera QR scanning, and dynamic event controls.
 
 ---
 
-## সিস্টেমের প্রধান রুটসমূহ (Routes)
+## System Architecture & Key Engineering Highlights
 
-| রুট (Route) | বিবরণ (Description) |
-|---|---|
-| `/` | **হোমপেইজ:** ইভেন্টের মূল তথ্য, লাইভ কাউন্টডাউন, ক্যাম্পাসের ছবি, ও পেমেন্ট নির্দেশিকা। |
-| `/register` | **রেজিস্ট্রেশন পেইজ:** তথ্য ও ছবি আপলোড, নগদ/রকেট পেমেন্ট ও TrxID জমা দেওয়ার ফর্ম। |
-| `/status` | **স্ট্যাটাস অনুসন্ধান:** মোবাইল নং বা রেজিস্ট্রেশন আইডি দিয়ে আবেদনের অবস্থা দেখা ও অনুমোদিত হলে রঙিন স্লিপ (PDF) ডাউনলোড। |
-| `/login` | **অ্যাডমিন লগইন:** আয়োজক কমিটির অ্যাডমিনদের নিরাপদ লগইন পোর্টাল। |
-| `/admin` | **অ্যাডমিন ড্যাশবোর্ড:** মোট নিশ্চিত ফি, মোট আবেদনকারী ও পেমেন্ট স্ট্যাটাসের ওভারভিউ। |
-| `/admin/students` | **আবেদন তালিকা:** রিয়েল-টাইম সার্চ, ব্যাচ ফিল্টারিং, TrxID যাচাই ও ১-ক্লিক অনুমোদন/বাতিল। |
-| `/admin/attendance` | **ইভেন্ট চেক-ইন:** অনুষ্ঠান দিবসে আইডি/ফোন দিয়ে লাইভ উপস্থিতি নিশ্চিতকরণ ও ক্যামেরা QR স্ক্যানার। |
-| `/admin/settings` | **ইভেন্ট সেটিংস:** ফর্ম চালু/বন্ধের সুইচ, স্বয়ংক্রিয় ডেডলাইন ওভাররাইড ও হিজরি তারিখ পরিবর্তন। |
-| `/verify/[token]` | **কিউআর যাচাইকরণ:** স্লিপে মুদ্রিত QR কোড স্ক্যান করে পাবলিক ভেরিফিকেশন ও অ্যাডমিন চেক-ইন। |
+### 1. Atomic Collision-Free Sequential IDs
+Rather than exposing raw MongoDB ObjectIDs or creating race conditions under simultaneous submissions, registrations are allocated sequential numeric identifiers starting at `500` using atomic MongoDB `$inc` pipelines on an isolated counter document (`registration-numeric`).
+
+### 2. Optimistic Concurrency Control (OCC)
+In multi-admin environments where multiple committee members review applications simultaneously, every student document maintains an atomic `revision` counter. State mutations (Approval, Rejection, Correction) verify that the record hasn't changed since it was loaded, preventing silent overwrites.
+
+### 3. Server-Rendered Bengali PDF Engine
+Complex South Asian scripts (specifically Bengali conjuncts, *juktakkhor*, and vowel signs) frequently break when rendered on client-side canvas or standard PDF engines. Milonmela renders slips server-side using `@react-pdf/renderer` paired with `sharp` and locally bundled **Noto Sans Bengali** (SIL Open Font License). Bengali glyph runs are rasterized at 288 DPI to ensure typographic accuracy while keeping English registration metadata selectable and searchable.
+
+### 4. Zero-Friction Gate Attendance & Camera Scanner
+On event day, gate volunteers can locate attendees instantly through a debounced real-time search (by name, mobile, registration ID, or TrxID) and mark attendance in **one tap**. Alternatively, volunteers can launch the built-in camera scanner, which leverages the browser-native `BarcodeDetector` API with an automated `jsQR` software decoding fallback. Every check-in captures an immutable audit timestamp and administrator attribution in Asia/Dhaka time.
+
+### 5. Multi-Layer Security & Privacy
+- **Stateless Double JWT Authentication:** 15-minute access and 7-day refresh tokens delivered strictly through `HttpOnly`, `SameSite=Strict`, `Secure` cookies.
+- **CSRF & Origin Verification:** Mutation endpoints inspect request origin and enforce Zod schema validation.
+- **Rate-Limiting:** Distributed IP-based rate limiting backed by MongoDB TTL expiration protects login and public lookups against brute-force attacks.
+- **Privacy-Preserving QR:** The verification QR encodes a random 256-bit cryptographic token URL—never exposing personal telephone numbers or addresses on the printed paper.
+- **Formula Injection Mitigation:** CSV exports automatically sanitize and escape spreadsheet formula triggers (`=`, `+`, `-`, `@`).
 
 ---
 
-## ব্যবহারকারী নির্দেশিকা (User Workflow — How to Proceed)
+## Routes & Endpoints
 
-### ক. শিক্ষার্থী ও আবেদনকারীদের জন্য (For Alumni / Applicants)
+| Route | Access | Purpose |
+|---|---|---|
+| `/` | Public | **Event Landing:** Live countdown timer, campus hero visual, event schedule, and payment details. |
+| `/register` | Public | **Registration Portal:** Form submission, photo upload, payment selection (Nagad/Rocket), and TrxID entry. |
+| `/status` | Public | **Status Lookup:** Search by Mobile Number or Registration ID; download verified PDF registration slip. |
+| `/login` | Public | **Admin Authentication:** Secure portal for committee administrators. |
+| `/admin` | Admin | **Executive Dashboard:** Live confirmed funds (BDT), total registrations, pending reviews, verified payments. |
+| `/admin/students` | Admin | **Participant Directory:** Real-time search, batch/payment filters, modal detail view, 1-click approvals, and CSV export. |
+| `/admin/attendance` | Admin | **Gate Check-in:** Real-time student search, instant attendance toggle, and integrated camera QR scanner. |
+| `/admin/settings` | Admin | **System Settings:** Registration toggle, auto-calculated midnight deadline override, event date/time, and Hijri date. |
+| `/verify/[token]` | Public / Admin | **QR Verification:** Public privacy-safe verification page; allows logged-in admins to check in attendees directly. |
+
+---
+
+## User Workflows (How to Proceed)
+
+### A. Participant & Alumni Journey
 
 ```
-[হোমপেইজ ভিজিট] ➔ [টাকা পাঠানো (নগদ/রকেট)] ➔ [রেজিস্ট্রেশন ফর্ম পূরণ] ➔ [আইডি ও স্ট্যাটাস লিংক সংরক্ষণ] ➔ [অ্যাডমিন অনুমোদন] ➔ [স্লিপ ডাউনলোড] ➔ [ইভেন্টে উপস্থিতি]
+[ Visit Homepage ] ➔ [ Send Payment (Nagad/Rocket) ] ➔ [ Submit Registration ] ➔ [ Receive ID & Link ] ➔ [ Admin Verification ] ➔ [ Download Slip ] ➔ [ Event Gate Check-in ]
 ```
 
-1. **ইভেন্ট বিবরণ দেখা:**  
-   হোমপেইজে (`/`) গিয়ে অনুষ্ঠানের তারিখ (১৫ আগস্ট, ২০২৭), সময়, স্থান এবং লাইভ কাউন্টডাউন দেখুন।
-2. **রেজিস্ট্রেশন ফি পরিশোধ:**  
-   নির্ধারিত ফি **৳ ২০০** টাকা আয়োজকদের নম্বরে (`+880 1812-945767`) নগদ অথবা রকেট-এ **Send Money** করুন এবং ট্রানজেকশন আইডি (TrxID) সংরক্ষণ করুন।
-3. **ফর্ম পূরণ ও জমা (`/register`):**  
-   - নাম, দাখিল পাসের ব্যাচ, মোবাইল নম্বর, রক্তের গ্রুপ, ঠিকানা ও ঐচ্ছিক ছবি প্রদান করুন।
-   - পেমেন্ট মেথড (নগদ/রকেট) সিলেক্ট করে TrxID লিখে **"আবেদন জমা দিন"** বাটনে চাপুন।
-4. **রেজিস্ট্রেশন নম্বর প্রাপ্তি:**  
-   ফর্ম জমা দেওয়ার সাথে সাথে আবেদনকারী একটি ইউনিক রেজিস্ট্রেশন নম্বর (যেমন: `501`) এবং একটি স্থায়ী লিংক (`/status?id=501`) পাবেন।
-5. **স্ট্যাটাস যাচাই ও স্লিপ ডাউনলোড (`/status`):**  
-   অ্যাডমিন পেমেন্ট যাচাই করে অনুমোদন দিলে স্ট্যাটাস পেইজ থেকে কিউআর কোড সম্বলিত রঙিন ডিজিটাল রেজিস্ট্রেশন স্লিপ (PDF) ডাউনলোড করা যাবে।
+1. **Review Event Information:**  
+   Alumni visit `/` to check event schedule, venue, registration fee (**BDT 200**), and live countdown.
+2. **Transfer Registration Fee:**  
+   The participant transfers BDT 200 via Nagad or Rocket **Send Money** to the official committee wallet (`+880 1812-945767`) and copies the Transaction ID (TrxID).
+3. **Complete Registration Form (`/register`):**  
+   - Enter full name, Dakhil completion batch, mobile number, blood group, address, and an optional profile photo (automatically compressed client-side).
+   - Select payment method, enter TrxID, and submit the application.
+4. **Instant Confirmation & Saved Link:**  
+   Upon submission, the applicant is assigned a unique numerical registration number (e.g., `501`) and given a shareable tracking link (`/status?id=501`).
+5. **Status Tracking & PDF Download (`/status`):**  
+   Once the admin verifies the transaction, the status updates to **Verified & Approved**, unlocking the official digital PDF Registration Slip equipped with an anti-counterfeit QR code.
 
 ---
 
-### খ. অ্যাডমিন ও আয়োজকদের জন্য (For Administrators)
+### B. Administrator & Committee Operations
 
-#### ১. লগইন করুন (`/login`):
-- অ্যাডমিন ইমেইল ও পাসওয়ার্ড দিয়ে সিস্টেমে প্রবেশ করুন।
-- লগইন তথ্য সেশনের সুরক্ষায় HttpOnly কুকিতে সংরক্ষিত থাকে।
-
-#### ২. ওভারভিউ ড্যাশবোর্ড (`/admin`):
-- মোট নিশ্চিত জমা টাকা (Collections) বড় ব্যানারে দেখতে পাবেন।
-- মোট আবেদন, অপেক্ষমান আবেদন, উপস্থিতির সংখ্যা ও বাতিল আবেদনের লাইভ পরিসংখ্যান।
-
-#### ৩. আবেদনকারীদের তালিকা ও পেমেন্ট অনুমোদন (`/admin/students`):
-- **রিয়েল-টাইম সার্চ:** নাম, মোবাইল, রেজিস্ট্রেশন নম্বর বা TrxID টাইপ করলেই তৎক্ষণাৎ ফলাফল ফিল্টার হয়।
-- **ফিল্টারিং:** নির্দিষ্ট ব্যাচ, পেমেন্ট অবস্থা (Pending/Verified), মেথড বা উপস্থিতির ভিত্তিতে তালিকা ফিল্টার করুন।
-- **পেমেন্ট যাচাই:** শিক্ষার্থীর কার্ডে ক্লিক করলে পূর্ণাঙ্গ তথ্য সহ পপআপ মোডাল ওপেন হবে। TrxID মিলিয়ে **"যাচাই ও অনুমোদন করুন"** বাটনে ক্লিক করলে আবেদনটি অনুমোদিত হবে এবং আবেদনকারী সাথে সাথে স্লিপ ডাউনলোডের অনুমতি পাবেন।
-- **সংশোধন অনুরোধ:** তথ্য বা TrxID ভুল থাকলে "সংশোধন প্রয়োজন" বাটন চাপুন।
-- **CSV Export:** ১-ক্লিকে সম্পূর্ণ তালিকা এক্সেল/সিএসভি ফরম্যাটে ডাউনলোড করা যায়।
-
-#### ৪. ইভেন্ট চেক-ইন ও উপস্থিতি গ্রহণ (`/admin/attendance`):
-- অনুষ্ঠানের দিন গেটে উপস্থিত শিক্ষার্থীর রেজিস্ট্রেশন নম্বর বা ফোন নম্বর লিখে সার্চ করলেই তথ্য চলে আসবে।
-- পাশে থাকা **"Mark as Attended"** বাটনে ১-ক্লিক করলেই সেকেন্ডের মধ্যে উপস্থিতি নিশ্চিত হবে।
-- স্লিপের কিউআর কোড স্ক্যান করতে **"ক্যামেরায় QR স্ক্যান করুন"** বাটনে চাপুন।
-- কে কোন সময়ে উপস্থিতি নিশ্চিত করেছেন এবং কোন অ্যাডমিন অনুমোদন দিয়েছেন—সবকিছু ডাটাবেজে স্থায়ীভাবে রেকর্ড থাকে।
-
-#### ৫. সেটিংস নিয়ন্ত্রণ (`/admin/settings`):
-- **ফর্ম বন্ধ/চালু:** যে কোনো সময় রেজিস্ট্রেশন ফর্ম বন্ধ বা পুনরায় চালু করা যায়।
-- **স্বয়ংক্রিয় ডেডলাইন:** ইভেন্টের আগের দিন রাত ১২টায় ফর্ম স্বয়ংক্রিয়ভাবে বন্ধ হয়। প্রয়োজনে "Override Deadline" চেক করে সময়সীমা বাড়ানো যায়।
+1. **Log in (`/login`):**  
+   Sign in using administrator credentials. Sessions are securely governed by HttpOnly cookies.
+2. **Monitor Dashboard (`/admin`):**  
+   Review confirmed revenue collection (BDT), total applicant counts, pending transactions, and current attendance numbers.
+3. **Verify Payments (`/admin/students`):**  
+   - Search applicants in real time or filter by Batch, Payment Status, or Attendance.
+   - Click any applicant card to open the detail modal dialog.
+   - Match the TrxID with the mobile money statement and click **"যাচাই ও অনুমোদন করুন" (Verify & Approve)**. Approval is granted atomically alongside payment verification.
+   - If information is incorrect, the admin can flag it as **"Correction Required"**, allowing the participant to update their TrxID via `/status`.
+   - Export filtered lists to Excel/CSV with one click.
+4. **Event Day Check-in (`/admin/attendance`):**  
+   - Gate volunteers enter the applicant's registration number or mobile number to see their profile instantly.
+   - Click **"Mark as Attended"** to record check-in with timestamp and admin attribution.
+   - Alternatively, tap **"ক্যামেরায় QR স্ক্যান করুন" (Scan QR)** to scan attendee slips directly using any smartphone camera.
+5. **Manage Settings (`/admin/settings`):**  
+   - Close or reopen registrations instantly with a single toggle.
+   - The system automatically closes registrations at midnight at the beginning of the event date (`Asia/Dhaka`). Organizers can manually override deadlines when needed.
 
 ---
 
-## কারিগরি বৈশিষ্ট্য (Technical Architecture & Features)
+## Tech Stack
 
-- **নিরাপদ ও প্রাইভেট বাংলা পিডিএফ ইঞ্জিন:**  
-  ব্রাউজারে রেন্ডার না করে সার্ভারে `@react-pdf/renderer` ও `sharp` ব্যবহার করে স্থানীয় **Noto Sans Bengali** ফন্টের সাহায্যে ২৮৮-ডিপিআই হাই-রেজোলিউশন বাংলা স্লিপ তৈরি হয়।
-- **মোবাইল-ফার্স্ট রেসপনসিভনেস:**  
-  স্মার্টফোন ও ডেস্কটপের জন্য সম্পূর্ণ অপটিমাইজড। বটম ন্যাভিগেশন বার, কার্ড ভিউ, মোডাল ডায়ালগ ও টাচ-ফ্রেন্ডলি বাটন।
-- **অ্যাটোমিক রেজিস্ট্রেশন কাউন্টার:**  
-  MongoDB `$inc` অ্যাটোমিক অপারেশন ব্যবহার করে ইউনিক ক্রমান্বয়িক রেজিস্ট্রেশন নম্বর (যেমন: `500, 501, 502...`) প্রদান করা হয়, যাতে ডুপ্লিকেট নম্বরের সম্ভাবনা শূন্য।
-- **অপটিমিস্টিক কনকারেন্সি কন্ট্রোল:**  
-  একাধিক অ্যাডমিন একই সাথে কাজ করলেও ডাটা ওভাররাইট এড়াতে `revision` ট্র্যাকিং ব্যবহৃত হয়।
-- **রেট লিমিটিং ও নিরাপত্তা:**  
-  লগইন ও সংবেদনশীল রুটে ব্রুট-ফোর্স রোধে MongoDB TTL ক্যাশ ভিত্তিক রেট লিমিটিং এবং কঠোর Zod ইনপুট ভ্যালিডেশন বিদ্যমান।
+| Layer | Technology | Justification |
+|---|---|---|
+| **Framework** | Next.js 16 (App Router) | Server-side rendering, Turbopack bundling, server actions, and route handlers. |
+| **UI Library** | React 19 | Modern hooks, concurrent rendering, and clean declarative components. |
+| **Database** | MongoDB Atlas & Mongoose 9 | Flexible document modeling, atomic counter increments, and TTL indexes. |
+| **Media Storage** | Cloudinary API & Sharp | Cloud media delivery, server-side MIME/magic-byte validation, and high-DPI image processing. |
+| **PDF Generation**| `@react-pdf/renderer` & HarfBuzz | Programmatic vector PDF slip generation with localized Bengali typography. |
+| **QR Code** | `qrcode` & `jsqr` | Cryptographic QR generation and fallback client-side camera barcode decoding. |
+| **Security** | `jsonwebtoken`, `bcryptjs`, `zod` | Robust stateless auth, cryptographically salted passwords, and strict schema validation. |
+| **Styling** | Vanilla CSS + Tailwind v4 | Handcrafted, touch-first responsive design without bulky runtime component overhead. |
 
 ---
 
-## এনভায়রনমেন্ট ভেরিয়েবল (Environment Variables)
+## Environment Variables
 
-প্রজেক্টের রুটে `.env` ফাইলে নিচের ভেরিয়েবলগুলো কনফিগার করতে হবে (নমুনা দেখতে `.env.example` দেখুন):
+Configure the following environment variables in a root `.env` file (refer to `.env.example`):
 
 ```env
-# MongoDB Connection
+# MongoDB Connection String
 MONGODB_URI="mongodb+srv://<username>:<password>@cluster.mongodb.net/milonmela?retryWrites=true&w=majority"
 
-# Authentication JWT Secret (কমপক্ষে ৩২ অক্ষরের শক্তিশালী কি)
+# JWT Authentication Secret (Minimum 32 characters random string)
 AUTH_SECRET="your_cryptographically_secure_random_string_min_32_chars"
 
-# Cloudinary Media Storage (শিক্ষার্থীদের ছবির জন্য)
-CLOUDINARY_CLOUD_NAME="your_cloud_name"
-CLOUDINARY_API_KEY="your_api_key"
-CLOUDINARY_API_SECRET="your_api_secret"
+# Cloudinary Storage Credentials
+CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
+CLOUDINARY_API_KEY="your_cloudinary_api_key"
+CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
 ```
 
 ---
 
-## লোকাল সেটআপ ও ডিপ্লয়মেন্ট (Local Setup & Deployment)
+## Local Setup & Development
 
-### লোকাল ডেভেলপমেন্ট:
+### Prerequisites
+- Node.js `22.13.0+` or `24 LTS`
+- npm `10+`
+- A running MongoDB Atlas instance
+
+### Installation
 
 ```bash
-# ১. ডিপেনডেন্সি ইন্সটল করুন
+# 1. Clone the repository
+git clone https://github.com/oliullah05/milonmela.git
+cd milonmela
+
+# 2. Install dependencies
 npm install
 
-# ২. ডেভেলপমেন্ট সার্ভার চালু করুন
-npm run dev
+# 3. Configure environment variables
+cp .env.example .env
+# Edit .env with your MongoDB URI, AUTH_SECRET, and Cloudinary keys
 
-# ব্রাউজারে ওপেন করুন: http://localhost:3100
+# 4. Start local development server
+npm run dev
 ```
 
-### প্রোডাকশন বিল্ড:
+Visit [http://localhost:3100](http://localhost:3100) in your browser.
+
+### Production Build
 
 ```bash
-# প্রোডাকশন বিল্ড তৈরি করুন
+# Build the optimized production application
 npm run build
 
-# সার্ভার স্টার্ট করুন
+# Start the production server
 npm start
 ```
 
-### Vercel ডিপ্লয়মেন্ট:
-প্রজেক্টটি সরাসরি [Vercel](https://vercel.com)-এ ডিপ্লয় করার উপযোগী। গিটহাব রিপোজিটরি কানেক্ট করে Vercel ড্যাশবোর্ডে উপরের Environment Variables যুক্ত করে দিলে স্বয়ংক্রিয়ভাবে লাইভ হবে।
+---
+
+## Deployment (Vercel)
+
+This application is optimized for deployment on [Vercel](https://vercel.com):
+
+1. Push your code to GitHub.
+2. Import the repository in your Vercel Dashboard.
+3. Configure the **Environment Variables** (`MONGODB_URI`, `AUTH_SECRET`, `CLOUDINARY_*`).
+4. Deploy. Vercel automatically detects the Next.js App Router configuration and deploys serverless functions with worldwide edge caching.
 
 ---
 
-## ডাটাবেজ স্কিমা ও সিকিউরিটি (Database & Security)
+## License
 
-- **Student:** আবেদনকারীর ব্যক্তিগত তথ্য, ব্যাচ, মোবাইল, পেমেন্ট মেথড, TrxID, পেমেন্ট অবস্থা (`pending`, `verified`, `correction_required`, `rejected`), উপস্থিতির তথ্য (`attended`, `attendedAt`, `attendedByName`), ভেরিফিকেশন টোকেন এবং ঢাকা টাইমজোন অনুসারে টাইমস্ট্যাম্প।
-- **Admin:** ইমেইল, পাসওয়ার্ড হ্যাশ (Bcrypt), স্ট্যাটাস ও সেশন ভার্সন।
-- **Setting:** ইভেন্ট টাইটেল, হিজরি তারিখ, ইভেন্ট সময়, ফি এবং ফর্মের স্টেটাস।
-- **Counter:** অ্যাটোমিক ক্রমান্বয়িক রেজিস্ট্রেশন নম্বর জেনারেটর।
-- **Limit:** ব্রুট-ফোর্স প্রটেকশনের জন্য রেট লিমিট রেকর্ড।
-
----
-
-## লাইসেন্স (License)
-
-এই প্রজেক্টটি **চুপাইর জামিউল উলুম আলিম মাদরাসা**-এর সুবর্ণজয়ন্তী প্রাক্তন ছাত্র পুনর্মিলনী ২০২৭-এর জন্য সংরক্ষিত।
+This project was developed for the 50th Golden Jubilee & Alumni Reunion 2027 of **Chupair Jamiul Ulum Alim Madrasah**. All rights reserved.
